@@ -11,13 +11,20 @@ var tbody = d3.select("tbody");
 // Create a variable for form
 var form = d3.select("#form");
 
+// Create a variable for button
+var button = d3.select("#filter-btn");
+
 // Create event handler
-form.on("submit", hitEnter)
+form.on("submit", hitEnter);
+button.on("click", hitEnter);
 
 function hitEnter() {
 
     // Prevent the page from refreshing
     d3.event.preventDefault();
+
+    // $("#table_of_items tbody tr").remove();
+    // $('#table tbody tr').detach(); 
 
     // Create input variable for 'datetime' id
     var inputElement = d3.select("#datetime");
@@ -60,6 +67,7 @@ function hitEnter() {
 
     filteredData.forEach(function(date) {
             var row = tbody.append("tr");
+
             row.append("td").text(date.datetime);
             row.append("td").text(date.city);
             row.append("td").text(date.state);
