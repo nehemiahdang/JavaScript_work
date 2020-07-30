@@ -7,12 +7,26 @@ var tableData = data;
 
 // Create a variable for tbody
 var tbody = d3.select("tbody");
+// var row = tbody.append("tr");
 
 // Create a variable for form
 var form = d3.select("#form");
 
 // Create a variable for button
 var button = d3.select("#filter-btn");
+
+// Display all the data into the table
+tableData.forEach(function(date) {
+    var row = tbody.append("tr");
+
+    row.append("td").text(date.datetime);
+    row.append("td").text(date.city);
+    row.append("td").text(date.state);
+    row.append("td").text(date.country);
+    row.append("td").text(date.shape);
+    row.append("td").text(date.durationMinutes);
+    row.append("td").text(date.comments);
+})
 
 // Create event handler
 form.on("submit", hitEnter);
@@ -22,9 +36,6 @@ function hitEnter() {
 
     // Prevent the page from refreshing
     d3.event.preventDefault();
-
-    // $("#table_of_items tbody tr").remove();
-    // $('#table tbody tr').detach(); 
 
     // Create input variable for 'datetime' id
     var inputElement = d3.select("#datetime");
@@ -61,19 +72,27 @@ function hitEnter() {
         }
     };
 
-    var filteredData = tableData.filter(filterData);
+    // Update the tableData everytime it's filtered with a new input
+    tableData = tableData.filter(filterData);
 
-    console.log(filteredData);
+    // Print the updated filtered data
+    console.log(tableData);
 
-    filteredData.forEach(function(date) {
-            var row = tbody.append("tr");
+    // Removes the table rows, if it exists
+    if (tbody != null) {
+        $("#table-area tbody tr").remove();
+    }
 
-            row.append("td").text(date.datetime);
-            row.append("td").text(date.city);
-            row.append("td").text(date.state);
-            row.append("td").text(date.country);
-            row.append("td").text(date.shape);
-            row.append("td").text(date.durationMinutes);
-            row.append("td").text(date.comments);
+    // Loop through the updated tableData and displays the filtered data from the input
+    tableData.forEach(function(date) {
+        var row = tbody.append("tr");
+
+        row.append("td").text(date.datetime);
+        row.append("td").text(date.city);
+        row.append("td").text(date.state);
+        row.append("td").text(date.country);
+        row.append("td").text(date.shape);
+        row.append("td").text(date.durationMinutes);
+        row.append("td").text(date.comments);
     })
 };
